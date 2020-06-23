@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textViewPlayer = findViewById(R.id.text_view_player);
         textViewAI = findViewById(R.id.text_view_AI);
-        for (int x = 0; x < 4; x++){
+        for (int x = 0; x < 4; x++){                                                                //for all spaces in the grid
             for (int y = 0; y < 4; y++){
                 String buttonID = "button_" + x + y;
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName()); //fetches IDs of the views dynamically  within the loop
