@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import java.util.Random;
 
 import org.w3c.dom.Text;
 
@@ -46,11 +47,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         if(playerTurn) {
+            ((Button) v).setTextColor(getResources().getColor(R.color.blue));
             ((Button) v).setText("X");
+            turnCount++;
+            playerTurn = !playerTurn;
+            Log.d("myTag3000", Integer.toString(turnCount));
             is_terminal_state();
         }
-
-        turnCount++;
+        get_ai_placement();
+        playerTurn = !playerTurn;
+        is_terminal_state();
+    }
+    //function that resets the whole board to an empty state and the number of turns to 0
+    public void reset_board(View v){
+        for(int x = 0; x < 4; x++){
+            for (int y = 0; y < 4; y++){
+                buttons[x][y].setText("");
+            }
+        }
+        turnCount = 0;
     }
 
     private boolean is_terminal_state(){
@@ -58,19 +73,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //down right
         for (int x = 0; x < 2; x++){
             for (int y = 0; y < 2; y++){
-                if ((!buttons[x][y].getText().toString().equals(""))&& (buttons[x][y].getText().toString().equals(buttons[x+1][y+1].getText().toString())) && (buttons[x][y].getText().toString().equals(buttons[x+2][y+2].getText().toString()))){
+                if ((!buttons[x][y].getText().toString().equals(""))
+                        && (buttons[x][y].getText().toString().equals(buttons[x+1][y+1].getText().toString()))
+                        && (buttons[x][y].getText().toString().equals(buttons[x+2][y+2].getText().toString()))){
                     Log.d("myTag", "WINNER!!!");
                     Log.d("myTag1", buttons[x][y].getText().toString());
                     Log.d("myTag2", buttons[x+1][y+1].getText().toString());
                     Log.d("myTag3", buttons[x+2][y+2].getText().toString());
-                    //return true;
+                    return true;
                 }
             }
         }
         //down left
         for (int x = 0; x < 2; x++){
             for (int y = 3; y > 1; y--){
-                if ((!buttons[x][y].getText().toString().equals("")) && (buttons[x][y].getText().toString() == buttons[x+1][y-1].getText().toString()) && (buttons[x][y].getText().toString() == buttons[x+2][y-2].getText().toString())){
+                if ((!buttons[x][y].getText().toString().equals(""))
+                        && (buttons[x][y].getText().toString() == buttons[x+1][y-1].getText().toString())
+                        && (buttons[x][y].getText().toString() == buttons[x+2][y-2].getText().toString())){
                     Log.d("myTag", "WINNER!!!");
                     Log.d("myTag1", buttons[x][y].getText().toString());
                     Log.d("myTag2", buttons[x+1][y-1].getText().toString());
@@ -82,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //horizontal
         for (int x = 0; x < 4; x++){
             for(int y = 0; y < 2; y++){
-                if ((!buttons[x][y].getText().toString().equals("")) && (buttons[x][y].getText().toString() == buttons[x][y+1].getText().toString()) && (buttons[x][y].getText().toString() == buttons[x][y+2].getText().toString())) {
+                if ((!buttons[x][y].getText().toString().equals(""))
+                        && (buttons[x][y].getText().toString() == buttons[x][y+1].getText().toString())
+                        && (buttons[x][y].getText().toString() == buttons[x][y+2].getText().toString())) {
                     Log.d("myTag", "WINNER WINNER CHICKEN DINNER!!!");
                     Log.d("myTag1", buttons[x][y].getText().toString());
                     Log.d("myTag2", buttons[x][y+1].getText().toString());
@@ -94,7 +115,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //vertical
         for (int x = 0; x < 2; x++){
             for(int y = 0; y < 4; y++){
-                if ((!buttons[x][y].getText().toString().equals("")) && (buttons[x][y].getText().toString() == buttons[x+1][y].getText().toString()) && (buttons[x][y].getText().toString() == buttons[x+2][y].getText().toString())) {
+                if ((!buttons[x][y].getText().toString().equals(""))
+                        && (buttons[x][y].getText().toString() == buttons[x+1][y].getText().toString())
+                        && (buttons[x][y].getText().toString() == buttons[x+2][y].getText().toString())) {
                     Log.d("myTag", "WINNER!!!");
                     Log.d("myTag1", buttons[x][y].getText().toString());
                     Log.d("myTag2", buttons[x+1][y].getText().toString());
@@ -104,8 +127,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         if (turnCount == 16){
+            Log.d("myTag", "Draw");
             return true;
         }
         return false;
+    }
+
+    public void get_ai_placement(){
+        Random rand = new Random();
+        int x_value = rand.nextInt(4);
+        int y_value = rand.nextInt(4);
+        boolean move_made = false;
+        while (!move_made) {
+            if (buttons[x_value][y_value].getText().toString().equals("")) {
+                buttons[x_value][y_value].setTextColor(getResources().getColor(R.color.red));
+                buttons[x_value][y_value].setText("O");
+                move_made = true;
+                turnCount++;
+            }
+            else {
+                x_value = rand.nextInt(4);
+                y_value = rand.nextInt(4);
+            }
+        }
+    }
+    public int determine_winner(){
+        if(is_terminal_state()){
+
+        }
+
+        return 0;
     }
 }
