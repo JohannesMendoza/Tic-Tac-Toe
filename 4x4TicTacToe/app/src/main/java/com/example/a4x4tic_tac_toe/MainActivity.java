@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         turnCount = 0;
     }
+    //function that determines if the board is full
+    /*private boolean board_full(){
+
+    }*/
 
     private boolean is_terminal_state(){
         //diagonal check
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("myTag1", buttons[x][y].getText().toString());
                     Log.d("myTag2", buttons[x+1][y+1].getText().toString());
                     Log.d("myTag3", buttons[x+2][y+2].getText().toString());
+
                     return true;
                 }
             }
@@ -158,4 +163,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return 0;
     }
+
+    /*public Move get_ai_move(){
+
+    }
+
+    public int minimax (String[][] board, int depth, Boolean player){
+
+    }*/
 }
