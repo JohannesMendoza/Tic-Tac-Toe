@@ -6,5 +6,11 @@ class Player {
     int wins;
     int win_streak;
 
+    Player(){
+        name = "Player 1";
+        wins = 0;
+        win_streak = 0;
+    }
+
 
 }

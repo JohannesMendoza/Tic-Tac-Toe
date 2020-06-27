@@ -2,17 +2,21 @@ package com.example.a4x4tic_tac_toe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Random;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    public static Context context;
+    GameBoard game_board = new GameBoard(context);
     private Button[][] buttons = new Button[4][4];
     private boolean playerTurn = true;
     private int turnCount;
@@ -47,6 +51,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         if(playerTurn) {
+            String id_of_button_clicked = v.getResources().getResourceName(v.getId());
+            String button_row_token = id_of_button_clicked.substring(id_of_button_clicked.length()-2, id_of_button_clicked.length()-1);
+            String button_column_token = id_of_button_clicked.substring(id_of_button_clicked.length()-1);
+            /*Context context = getApplicationContext();
+            CharSequence text = button_index_tokens;
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();*/
+            int row_value = Integer.parseInt(button_row_token);
+            Log.d("row", button_row_token);
+            int column_value = Integer.parseInt(button_column_token);
+            Log.d("column", button_column_token);
+            game_board.setBoard(row_value, column_value, "X");
+            game_board.print_game_board();
+
+
             ((Button) v).setTextColor(getResources().getColor(R.color.blue));
             ((Button) v).setText("X");
             turnCount++;
@@ -138,24 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    public void get_ai_placement(){
-        Random rand = new Random();
-        int x_value = rand.nextInt(4);
-        int y_value = rand.nextInt(4);
-        boolean move_made = false;
-        while (!move_made) {
-            if (buttons[x_value][y_value].getText().toString().equals("")) {
-                buttons[x_value][y_value].setTextColor(getResources().getColor(R.color.red));
-                buttons[x_value][y_value].setText("O");
-                move_made = true;
-                turnCount++;
-            }
-            else {
-                x_value = rand.nextInt(4);
-                y_value = rand.nextInt(4);
-            }
-        }
-    }
+
     public int determine_winner(){
         if(is_terminal_state()){
 
