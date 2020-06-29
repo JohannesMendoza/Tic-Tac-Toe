@@ -22,13 +22,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int turnCount;
     private int playerPoints;
     private int AIPoints;
+    Player player = new Player();
+    AI_Player AI = new AI_Player();
 
     private TextView textViewPlayer;
     private TextView textViewAI;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {                                            //method to set up a player, AI player, the internal game board, and the
+                                                                                                    //GUI for the game board
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -46,37 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button resetButton = findViewById(R.id.button_reset);
     }
     @Override
-    public void onClick(View v){
+    public void onClick(View v){                            //function for action when a button on the grid is clicked
         if (!((Button) v).getText().toString().equals("")) {//if button that was clicked contains an empty string
             return;
         }
-        if(playerTurn) {
-            String id_of_button_clicked = v.getResources().getResourceName(v.getId());
-            String button_row_token = id_of_button_clicked.substring(id_of_button_clicked.length()-2, id_of_button_clicked.length()-1);
-            String button_column_token = id_of_button_clicked.substring(id_of_button_clicked.length()-1);
-            /*Context context = getApplicationContext();
-            CharSequence text = button_index_tokens;
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();*/
-            int row_value = Integer.parseInt(button_row_token);
-            Log.d("row", button_row_token);
-            int column_value = Integer.parseInt(button_column_token);
-            Log.d("column", button_column_token);
-            game_board.setBoard(row_value, column_value, "X");
-            game_board.print_game_board();
+        setBoard(get_move_from_button_click(v, "X"));
 
-
-            ((Button) v).setTextColor(getResources().getColor(R.color.blue));
-            ((Button) v).setText("X");
-            turnCount++;
-            playerTurn = !playerTurn;
-            Log.d("myTag3000", Integer.toString(turnCount));
-            is_terminal_state();
-        }
-        get_ai_placement();
-        playerTurn = !playerTurn;
-        is_terminal_state();
     }
     //function that resets the whole board to an empty state and the number of turns to 0
     public void reset_board(View v){
@@ -92,70 +70,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }*/
 
-    private boolean is_terminal_state(){
-        //diagonal check
-        //down right
-        for (int x = 0; x < 2; x++){
-            for (int y = 0; y < 2; y++){
-                if ((!buttons[x][y].getText().toString().equals(""))
-                        && (buttons[x][y].getText().toString().equals(buttons[x+1][y+1].getText().toString()))
-                        && (buttons[x][y].getText().toString().equals(buttons[x+2][y+2].getText().toString()))){
-                    Log.d("myTag", "WINNER!!!");
-                    Log.d("myTag1", buttons[x][y].getText().toString());
-                    Log.d("myTag2", buttons[x+1][y+1].getText().toString());
-                    Log.d("myTag3", buttons[x+2][y+2].getText().toString());
+    public Move get_move_from_button_click(View v, String symbol){
+        Move move = new Move();
+        String id_of_button_clicked = v.getResources().getResourceName(v.getId());                                                      //set ID of button clicked to variable
+        String button_row_token = id_of_button_clicked.substring(id_of_button_clicked.length()-2, id_of_button_clicked.length()-1);     //take the row denoted in string and set it to a variable
+        String button_column_token = id_of_button_clicked.substring(id_of_button_clicked.length()-1);                                   //take the column denoted in string and set it to a variable
 
-                    return true;
-                }
-            }
+        move.row = Integer.parseInt(button_row_token);                                     //Convert row substring into an integer
+        move.column = Integer.parseInt(button_column_token);                               //Convert column substring into an integer
+        move.value = "X";
+
+        game_board.setBoard(move);                               //use row/column indices to place mark on internal game_board
+        game_board.print_game_board();
+        return move;
+
+    }
+
+    public void setBoard(Move move){
+        /*if (!((Button) v).getText().toString().equals("")) {//if button that was clicked contains an empty string
+            return;
         }
-        //down left
-        for (int x = 0; x < 2; x++){
-            for (int y = 3; y > 1; y--){
-                if ((!buttons[x][y].getText().toString().equals(""))
-                        && (buttons[x][y].getText().toString() == buttons[x+1][y-1].getText().toString())
-                        && (buttons[x][y].getText().toString() == buttons[x+2][y-2].getText().toString())){
-                    Log.d("myTag", "WINNER!!!");
-                    Log.d("myTag1", buttons[x][y].getText().toString());
-                    Log.d("myTag2", buttons[x+1][y-1].getText().toString());
-                    Log.d("myTag3", buttons[x+2][y-2].getText().toString());
-                    return true;
-                }
-            }
+        if(playerTurn) {
+            String id_of_button_clicked = v.getResources().getResourceName(v.getId());                                                      //set ID of button clicked to variable
+            String button_row_token = id_of_button_clicked.substring(id_of_button_clicked.length()-2, id_of_button_clicked.length()-1);     //take the row denoted in string and set it to a variable
+            String button_column_token = id_of_button_clicked.substring(id_of_button_clicked.length()-1);                                   //take the column denoted in string and set it to a variable
+
+            int row_value = Integer.parseInt(button_row_token);                                     //Convert row substring into an integer
+            int column_value = Integer.parseInt(button_column_token);                               //Convert column substring into an integer
+            game_board.setBoard(row_value, column_value, "X");                               //use row/column indices to place mark on internal game_board
+            game_board.print_game_board();
+
+            ((Button) v).setTextColor(getResources().getColor(R.color.blue));
+            ((Button) v).setText("X");
+            turnCount++;
+            playerTurn = !playerTurn;
+            Log.d("myTag3000", Integer.toString(turnCount));
+            is_terminal_state();
         }
-        //horizontal
-        for (int x = 0; x < 4; x++){
-            for(int y = 0; y < 2; y++){
-                if ((!buttons[x][y].getText().toString().equals(""))
-                        && (buttons[x][y].getText().toString() == buttons[x][y+1].getText().toString())
-                        && (buttons[x][y].getText().toString() == buttons[x][y+2].getText().toString())) {
-                    Log.d("myTag", "WINNER WINNER CHICKEN DINNER!!!");
-                    Log.d("myTag1", buttons[x][y].getText().toString());
-                    Log.d("myTag2", buttons[x][y+1].getText().toString());
-                    Log.d("myTag3", buttons[x][y+2].getText().toString());
-                    return true;
-                }
-            }
+        AI.make_random_move(game_board);
+        playerTurn = !playerTurn;
+        is_terminal_state();*/
+        if (move.value.equals('X')) {
+            buttons[move.row][move.column].setTextColor(getResources().getColor(R.color.blue));
         }
-        //vertical
-        for (int x = 0; x < 2; x++){
-            for(int y = 0; y < 4; y++){
-                if ((!buttons[x][y].getText().toString().equals(""))
-                        && (buttons[x][y].getText().toString() == buttons[x+1][y].getText().toString())
-                        && (buttons[x][y].getText().toString() == buttons[x+2][y].getText().toString())) {
-                    Log.d("myTag", "WINNER!!!");
-                    Log.d("myTag1", buttons[x][y].getText().toString());
-                    Log.d("myTag2", buttons[x+1][y].getText().toString());
-                    Log.d("myTag3", buttons[x+2][y].getText().toString());
-                    return true;
-                }
-            }
+        else{
+            buttons[move.row][move.column].setTextColor(getResources().getColor(R.color.red));
         }
-        if (turnCount == 16){
-            Log.d("myTag", "Draw");
-            return true;
-        }
-        return false;
+        buttons[move.row][move.column].setText(move.value);
     }
 
 

@@ -3,4 +3,5 @@ package com.example.a4x4tic_tac_toe;
 public class Move {
     int row;
     int column;
+    String value;
 }

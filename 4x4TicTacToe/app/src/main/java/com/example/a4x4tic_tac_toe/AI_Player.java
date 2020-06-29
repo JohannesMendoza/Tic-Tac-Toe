@@ -9,7 +9,7 @@ class AI_Player extends Player {
         wins = 0;
         win_streak = 0;
     }
-    public Move make_basic_move(GameBoard game_board){
+    public Move make_random_move(GameBoard game_board){                 //method for the AI agent to make a random move on a game board
         Move move = new Move();
         Random rand = new Random();
         move.row = rand.nextInt(4);

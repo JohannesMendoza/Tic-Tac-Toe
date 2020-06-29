@@ -23,7 +23,7 @@ public class GameBoard {
     GameBoard (Context context){
         this.context = context;
         board = new String[4][4];
-        turn_count = 0;
+        reset_board();
     }
 
     public boolean is_board_full(){     //function to determine whether  a game board is full or not
@@ -90,8 +90,8 @@ public class GameBoard {
         }
         return false;
     }
-    void setBoard(int row, int col, String value){
-        board[row][col] = value;
+    void setBoard(Move m){
+        board[m.row][m.column] = m.value;
         turn_count++;
     }
     /*void undo_move(){                               //function to undo the previous 2 moves
@@ -102,7 +102,6 @@ public class GameBoard {
     }*/
     public int determine_winner(){
         if(is_terminal_state()){
-
         }
 
         return 0;
