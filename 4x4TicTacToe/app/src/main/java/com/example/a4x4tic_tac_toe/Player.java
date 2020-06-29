@@ -4,12 +4,21 @@ package com.example.a4x4tic_tac_toe;
 class Player {
     String name;
     int wins;
-    int win_streak;
+    int winStreak;
 
     Player(){
         name = "Player 1";
         wins = 0;
-        win_streak = 0;
+        winStreak = 0;
+    }
+    String getName(){
+        return name;
+    }
+    int getWins(){
+        return wins;
+    }
+    int getWinStreak(){
+        return winStreak;
     }
 
 

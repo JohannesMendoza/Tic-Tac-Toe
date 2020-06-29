@@ -181,7 +181,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="33dp"
-            android:onClick="reset_board"
+            android:onClick="resetBoard"
             android:background="@color/black"
             android:textColor="@android:color/white"
             android:text="reset" />

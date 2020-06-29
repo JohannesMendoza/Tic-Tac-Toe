@@ -16,7 +16,7 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     public static Context context;
-    GameBoard game_board = new GameBoard(context);
+    GameBoard gameBoard = new GameBoard(context);
     private Button[][] buttons = new Button[4][4];
     private boolean playerTurn = true;
     private int turnCount;
@@ -49,90 +49,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button resetButton = findViewById(R.id.button_reset);
     }
     @Override
-    public void onClick(View v){                            //function for action when a button on the grid is clicked
-        if (!((Button) v).getText().toString().equals("")) {//if button that was clicked contains an empty string
+    public void onClick(View v){                                                                    //function for action when a button on the grid is clicked
+        if (!((Button) v).getText().toString().equals("")) {                                        //if button that was clicked contains an empty string
             return;
         }
-        setBoard(get_move_from_button_click(v, "X"));
-
+        gameBoard.setBoard(getMoveFromButtonClick(v, "X"));                               //use row/column indices to place mark on internal game_board
+        //gameBoard.printGameBoard();
+        setBoard(getMoveFromButtonClick(v, "X"));
+        gameBoard.printGameBoard();
+        setBoard(AI.makeRandomMove(gameBoard));
+        gameBoard.printGameBoard();
     }
-    //function that resets the whole board to an empty state and the number of turns to 0
-    public void reset_board(View v){
+    public void resetBoard(View v){                                                                //function that resets the whole board to an empty state and the number of turns to 0
         for(int x = 0; x < 4; x++){
             for (int y = 0; y < 4; y++){
                 buttons[x][y].setText("");
             }
         }
         turnCount = 0;
+        gameBoard.resetBoard();
     }
     //function that determines if the board is full
     /*private boolean board_full(){
 
     }*/
 
-    public Move get_move_from_button_click(View v, String symbol){
+    public Move getMoveFromButtonClick(View v, String symbol){
         Move move = new Move();
-        String id_of_button_clicked = v.getResources().getResourceName(v.getId());                                                      //set ID of button clicked to variable
-        String button_row_token = id_of_button_clicked.substring(id_of_button_clicked.length()-2, id_of_button_clicked.length()-1);     //take the row denoted in string and set it to a variable
-        String button_column_token = id_of_button_clicked.substring(id_of_button_clicked.length()-1);                                   //take the column denoted in string and set it to a variable
+        String IDOfButtonClicked = v.getResources().getResourceName(v.getId());                                                      //set ID of button clicked to variable
+        String buttonRowToken = IDOfButtonClicked.substring(IDOfButtonClicked.length()-2, IDOfButtonClicked.length()-1);     //take the row denoted in string and set it to a variable
+        String buttonColumnToken = IDOfButtonClicked.substring(IDOfButtonClicked.length()-1);                                   //take the column denoted in string and set it to a variable
 
-        move.row = Integer.parseInt(button_row_token);                                     //Convert row substring into an integer
-        move.column = Integer.parseInt(button_column_token);                               //Convert column substring into an integer
-        move.value = "X";
-
-        game_board.setBoard(move);                               //use row/column indices to place mark on internal game_board
-        game_board.print_game_board();
+        move.setRow(Integer.parseInt(buttonRowToken));                                     //Convert row substring into an integer
+        move.setColumn(Integer.parseInt(buttonColumnToken));                               //Convert column substring into an integer
+        move.setValue("X");
         return move;
 
     }
-
     public void setBoard(Move move){
-        /*if (!((Button) v).getText().toString().equals("")) {//if button that was clicked contains an empty string
-            return;
-        }
-        if(playerTurn) {
-            String id_of_button_clicked = v.getResources().getResourceName(v.getId());                                                      //set ID of button clicked to variable
-            String button_row_token = id_of_button_clicked.substring(id_of_button_clicked.length()-2, id_of_button_clicked.length()-1);     //take the row denoted in string and set it to a variable
-            String button_column_token = id_of_button_clicked.substring(id_of_button_clicked.length()-1);                                   //take the column denoted in string and set it to a variable
-
-            int row_value = Integer.parseInt(button_row_token);                                     //Convert row substring into an integer
-            int column_value = Integer.parseInt(button_column_token);                               //Convert column substring into an integer
-            game_board.setBoard(row_value, column_value, "X");                               //use row/column indices to place mark on internal game_board
-            game_board.print_game_board();
-
-            ((Button) v).setTextColor(getResources().getColor(R.color.blue));
-            ((Button) v).setText("X");
-            turnCount++;
-            playerTurn = !playerTurn;
-            Log.d("myTag3000", Integer.toString(turnCount));
-            is_terminal_state();
-        }
-        AI.make_random_move(game_board);
-        playerTurn = !playerTurn;
-        is_terminal_state();*/
-        if (move.value.equals('X')) {
-            buttons[move.row][move.column].setTextColor(getResources().getColor(R.color.blue));
+        if (move.getValue().equals("X")) {
+            buttons[move.getRow()][move.getColumn()].setTextColor(getResources().getColor(R.color.blue));
         }
         else{
-            buttons[move.row][move.column].setTextColor(getResources().getColor(R.color.red));
+            buttons[move.getRow()][move.getColumn()].setTextColor(getResources().getColor(R.color.red));
         }
-        buttons[move.row][move.column].setText(move.value);
+        buttons[move.getRow()][move.getColumn()].setText(move.getValue());
     }
-
-
-    public int determine_winner(){
-        if(is_terminal_state()){
-
-        }
-
-        return 0;
-    }
-
-    /*public Move get_ai_move(){
-
-    }
-
-    public int minimax (String[][] board, int depth, Boolean player){
-
-    }*/
 }

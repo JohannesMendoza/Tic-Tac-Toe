@@ -13,42 +13,46 @@ import java.util.Arrays;
 public class GameBoard {
     Context context;
     String[][] board;                   //2D array representation of the board
-    boolean board_full;                 //denotes if board is full
-    int turn_count = 0;                 //variable that keeps count of the number of turns played so far
-    //Move move_log[];                    //log of all the moves played within the game
-    Player players[];                   //list of players in the game
+    boolean boardFull;                 //denotes if board is full
+    int turnCount = 0;                 //variable that keeps count of the number of turns played so far
+    //Move moveLog[];                    //log of all the moves played within the game
+    Player players[] = new Player[2];                   //list of players in the game
+    boolean player1sTurn;
 
 
 
-    GameBoard (Context context){
+    GameBoard (Context context, Player player1, Player player2){
         this.context = context;
         board = new String[4][4];
-        reset_board();
+        resetBoard();
+        players[0] = player1;
+        players[1] = player2;
+        player1sTurn = true;
     }
 
-    public boolean is_board_full(){     //function to determine whether  a game board is full or not
-        if (turn_count == 16){
+    public boolean isBoardFull(){     //function to determine whether  a game board is full or not
+        if (turnCount == 16){
             return true;
         }
         else
             return false;
     }
+    public boolean isPlayer1sTurn(){
+        return player1sTurn;
+    }
 
-    public void reset_board(){          //function to reset the game board
+    public void resetBoard(){          //function to reset the game board
         for(int row = 0; row < 4; row++){
             for (int col = 0; col < 4; col++){
                 board[row][col] = "";
             }
         }
-        turn_count = 0;
+        turnCount = 0;
     }
 
-    private boolean is_terminal_state(){        //function to check whether the board is full, or a player has accumulated 3 in a row
+    private boolean isTerminalState(){        //function to check whether the board is full, or a player has accumulated 3 in a row
         //diagonal check
         //down right
-        if (is_board_full()){
-            return true;
-        }
         for (int x = 0; x < 2; x++){
             for (int y = 0; y < 2; y++){
                 if ((!board[x][y].equals(""))
@@ -88,30 +92,42 @@ public class GameBoard {
                 }
             }
         }
+        if (isBoardFull()){
+            return true;
+        }
         return false;
     }
     void setBoard(Move m){
         board[m.row][m.column] = m.value;
-        turn_count++;
+        turnCount++;
     }
-    /*void undo_move(){                               //function to undo the previous 2 moves
+    /*void undoMove(){                               //function to undo the previous 2 moves
         for (int x = 0; x < 2; x++) {
-            board[move_log[turn_count].row][move_log[turn_count].column] = "";
-            turn_count--;
+            board[moveLog[turnCount].row][moveLog[turnCount].column] = "";
+            turnCount--;
         }
     }*/
-    public int determine_winner(){
-        if(is_terminal_state()){
+
+    public boolean isDraw(){
+        if(isBoardFull() && isTerminalState()){
+            return true;
+        }
+    }
+
+    public Player determineWinner(){
+        if(isTerminalState()){
+            if(isPlayer1sTurn())
         }
 
         return 0;
     }
 
-    public void print_game_board(){
+    public void printGameBoard(){
+        Log.d("row_turns", Integer.toString(turnCount));
         Log.d("game_board_row 0", board[0][0] + board[0][1] + board[0][2] + board[0][3]);
-        Log.d("game_board_row 0", board[1][0] + board[1][1] + board[1][2] + board[1][3]);
-        Log.d("game_board_row 0", board[2][0] + board[2][1] + board[2][2] + board[2][3]);
-        Log.d("game_board_row 0", board[3][0] + board[3][1] + board[3][2] + board[3][3]);
+        Log.d("game_board_row 1", board[1][0] + board[1][1] + board[1][2] + board[1][3]);
+        Log.d("game_board_row 2", board[2][0] + board[2][1] + board[2][2] + board[2][3]);
+        Log.d("game_board_row 3", board[3][0] + board[3][1] + board[3][2] + board[3][3]);
     }
 
 }
