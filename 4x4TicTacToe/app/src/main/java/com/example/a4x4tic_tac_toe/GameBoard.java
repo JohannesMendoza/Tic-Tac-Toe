@@ -50,7 +50,7 @@ public class GameBoard {
         turnCount = 0;
     }
 
-    private boolean isTerminalState(){        //function to check whether the board is full, or a player has accumulated 3 in a row
+    public int terminalStateStatus(){        //function to check whether the board is full, or a player has accumulated 3 in a row
         //diagonal check
         //down right
         for (int x = 0; x < 2; x++){
@@ -58,7 +58,10 @@ public class GameBoard {
                 if ((!board[x][y].equals(""))
                         && (board[x][y].equals(board[x+1][y+1]))
                         && (board[x][y].equals(board[x+2][y+2]))){
-                    return true;
+                    if (board[x][y].equals("X"))
+                        return 2;
+                    else
+                        return 3;
                 }
             }
         }
@@ -68,7 +71,10 @@ public class GameBoard {
                 if ((!board[x][y].equals(""))
                         && (board[x][y].equals(board[x+1][y-1]))
                         && (board[x][y].equals(board[x+2][y-2]))){
-                    return true;
+                    if (board[x][y].equals("X"))
+                        return 2;
+                    else
+                        return 3;
                 }
             }
         }
@@ -78,7 +84,10 @@ public class GameBoard {
                 if ((!board[x][y].equals(""))
                         && (board[x][y].equals(board[x][y+1]))
                         && (board[x][y].equals(board[x][y+2]))){
-                    return true;
+                    if (board[x][y].equals("X"))
+                        return 2;
+                    else
+                        return 3;
                 }
             }
         }
@@ -88,14 +97,17 @@ public class GameBoard {
                 if ((!board[x][y].equals(""))
                         && (board[x][y].equals(board[x+1][y]))
                         && (board[x][y].equals(board[x+2][y]))){
-                    return true;
+                    if (board[x][y].equals("X"))
+                        return 2;
+                    else
+                        return 3;
                 }
             }
         }
         if (isBoardFull()){
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
     void setBoard(Move m){
         board[m.row][m.column] = m.value;
@@ -109,18 +121,21 @@ public class GameBoard {
     }*/
 
     public boolean isDraw(){
-        if(isBoardFull() && isTerminalState()){
+        if(terminalStateStatus() == 0){
             return true;
         }
+            return false;
     }
 
-    public Player determineWinner(){
-        if(isTerminalState()){
-            if(isPlayer1sTurn())
+    /*public Player determineWinner(){
+        if(terminalStateStatus() == 0){
+            if(isPlayer1sTurn()){
+
+            }
         }
 
         return 0;
-    }
+    }*/
 
     public void printGameBoard(){
         Log.d("row_turns", Integer.toString(turnCount));

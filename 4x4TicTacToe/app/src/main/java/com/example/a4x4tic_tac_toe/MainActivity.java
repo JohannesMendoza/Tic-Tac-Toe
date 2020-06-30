@@ -16,14 +16,15 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     public static Context context;
-    GameBoard gameBoard = new GameBoard(context);
+    Player player = new Player();
+    AI_Player AI = new AI_Player();
+    GameBoard gameBoard = new GameBoard(context, player, AI);
     private Button[][] buttons = new Button[4][4];
     private boolean playerTurn = true;
     private int turnCount;
     private int playerPoints;
     private int AIPoints;
-    Player player = new Player();
-    AI_Player AI = new AI_Player();
+    private boolean gameOver;
 
     private TextView textViewPlayer;
     private TextView textViewAI;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                                                                     //GUI for the game board
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gameOver = false;
 
         textViewPlayer = findViewById(R.id.text_view_player);
         textViewAI = findViewById(R.id.text_view_AI);
@@ -50,15 +52,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onClick(View v){                                                                    //function for action when a button on the grid is clicked
-        if (!((Button) v).getText().toString().equals("")) {                                        //if button that was clicked contains an empty string
-            return;
+
+        if(gameOver == false) {
+
+            if (!((Button) v).getText().toString().equals("")) {                                        //if button that was clicked contains an empty string
+                return;
+            }
+            gameBoard.setBoard(getMoveFromButtonClick(v, "X"));                               //use row/column indices to place mark on internal game_board
+            //gameBoard.printGameBoard();
+            setBoard(getMoveFromButtonClick(v, "X"));
+            gameBoard.printGameBoard();
+            int status = gameBoard.terminalStateStatus();
+            if(status != 0){
+                gameOverProtocol(status);
+            }
+            else {
+                setBoard(AI.makeRandomMove(gameBoard));
+                gameBoard.printGameBoard();
+                status = gameBoard.terminalStateStatus();
+                if(status != 0){
+                    gameOverProtocol(status);
+                }
+            }
         }
-        gameBoard.setBoard(getMoveFromButtonClick(v, "X"));                               //use row/column indices to place mark on internal game_board
-        //gameBoard.printGameBoard();
-        setBoard(getMoveFromButtonClick(v, "X"));
-        gameBoard.printGameBoard();
-        setBoard(AI.makeRandomMove(gameBoard));
-        gameBoard.printGameBoard();
     }
     public void resetBoard(View v){                                                                //function that resets the whole board to an empty state and the number of turns to 0
         for(int x = 0; x < 4; x++){
@@ -67,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         turnCount = 0;
+        gameOver = false;
         gameBoard.resetBoard();
     }
     //function that determines if the board is full
@@ -94,5 +111,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             buttons[move.getRow()][move.getColumn()].setTextColor(getResources().getColor(R.color.red));
         }
         buttons[move.getRow()][move.getColumn()].setText(move.getValue());
+    }
+
+    public void displayResult(int result){
+        Context context = getApplicationContext();
+        Toast toast;
+        int duration = Toast.LENGTH_LONG;
+
+        switch (result){
+            case 1:
+                toast = Toast.makeText(context, "The game is a draw!", duration);
+                toast.show();
+                break;
+            case 2:
+                toast = Toast.makeText(context, "You have won!", duration);
+                toast.show();
+                break;
+            case 3:
+                toast = Toast.makeText(context, AI.getName() + " has won!", duration);
+                toast.show();
+                break;
+        }
+    }
+    public void gameOverProtocol(int status){
+        gameOver = true;
+        displayResult(status);
     }
 }
