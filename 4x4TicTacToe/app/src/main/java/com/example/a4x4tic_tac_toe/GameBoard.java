@@ -59,9 +59,12 @@ public class GameBoard {
                         && (board[x][y].equals(board[x+1][y+1]))
                         && (board[x][y].equals(board[x+2][y+2]))){
                     if (board[x][y].equals("X"))
-                        return 2;
-                    else
-                        return 3;
+                        return -17;
+                    else{
+                        //Log.d("tstate1", "Ai wins down right at");
+                        //Log.d("tstate1", Integer.toString(x) + Integer.toString(y));
+                        return 17;
+                    }
                 }
             }
         }
@@ -72,9 +75,12 @@ public class GameBoard {
                         && (board[x][y].equals(board[x+1][y-1]))
                         && (board[x][y].equals(board[x+2][y-2]))){
                     if (board[x][y].equals("X"))
-                        return 2;
-                    else
-                        return 3;
+                        return -17;
+                    else{
+                        //Log.d("tstate2", "Ai wins down left at");
+                        //Log.d("tstate2", Integer.toString(x) + Integer.toString(y));
+                        return 17;
+                    }
                 }
             }
         }
@@ -85,9 +91,12 @@ public class GameBoard {
                         && (board[x][y].equals(board[x][y+1]))
                         && (board[x][y].equals(board[x][y+2]))){
                     if (board[x][y].equals("X"))
-                        return 2;
-                    else
-                        return 3;
+                        return -17;
+                    else {
+                        //Log.d("tstate3", "Ai wins horizontally at");
+                        //Log.d("tstate3", Integer.toString(x) + Integer.toString(y));
+                        return 17;
+                    }
                 }
             }
         }
@@ -98,9 +107,12 @@ public class GameBoard {
                         && (board[x][y].equals(board[x+1][y]))
                         && (board[x][y].equals(board[x+2][y]))){
                     if (board[x][y].equals("X"))
-                        return 2;
-                    else
-                        return 3;
+                        return -17;
+                    else{
+                        //Log.d("tstate4", "Ai wins vertically at");
+                        //Log.d("tstate4", Integer.toString(x) + Integer.toString(y));
+                        return 17;
+                    }
                 }
             }
         }

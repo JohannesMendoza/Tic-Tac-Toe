@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v){                                                                    //function for action when a button on the grid is clicked
 
         if(gameOver == false) {
-
             if (!((Button) v).getText().toString().equals("")) {                                        //if button that was clicked contains an empty string
                 return;
             }
@@ -63,11 +62,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setBoard(getMoveFromButtonClick(v, "X"));
             gameBoard.printGameBoard();
             int status = gameBoard.terminalStateStatus();
+            Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
             if(status != 0){
                 gameOverProtocol(status);
             }
             else {
-                setBoard(AI.makeRandomMove(gameBoard));
+                Move AIMove = new Move();
+                if(gameBoard.turnCount > 4) {
+                    AIMove = AI.playBestMove(gameBoard);
+                    gameBoard.setBoard(AIMove);
+                    setBoard(AIMove);
+                }
+                else {
+                    AIMove = AI.playRandomMove(gameBoard);
+                    //gameBoard.setBoard(AIMove);
+                    setBoard(AIMove);
+                }
+                Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
+                Log.d("status", "below this is the current board");
                 gameBoard.printGameBoard();
                 status = gameBoard.terminalStateStatus();
                 if(status != 0){
@@ -123,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toast = Toast.makeText(context, "The game is a draw!", duration);
                 toast.show();
                 break;
-            case 2:
+            case -17:
                 toast = Toast.makeText(context, "You have won!", duration);
                 toast.show();
                 break;
-            case 3:
+            case 17:
                 toast = Toast.makeText(context, AI.getName() + " has won!", duration);
                 toast.show();
                 break;
