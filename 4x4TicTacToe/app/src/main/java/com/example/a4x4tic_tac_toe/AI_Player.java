@@ -85,6 +85,60 @@ class AI_Player extends Player {
             return best;
         }
     }
+
+    public int minimaxAlphaBeta(GameBoard gameBoard, int depth, boolean turn, int alpha, int beta){
+        int score = gameBoard.terminalStateStatus();
+        if (score == 17){
+            //Log.d("playBestMove", Integer.toString(score) + Integer.toString(depth));
+            return score - depth;
+        }
+        if (score == -17){
+            return score + depth;
+        }
+        if (gameBoard.isBoardFull()){
+            return 0;
+        }
+        if (turn){
+            int best = -1000;
+            for(int row = 0; row < 4; row++){
+                for(int column = 0; column < 4; column++) {
+                    if (gameBoard.board[row][column].equals("")){
+                        gameBoard.board[row][column] = "O";
+                        best = Math.max(best, minimaxAlphaBeta(gameBoard, depth + 1, !turn, alpha, beta));
+                        gameBoard.board[row][column] = "";
+                        alpha = Math.max(alpha, best);
+                        if(beta <= alpha){
+                            break;
+                        }
+                    }
+                }
+            }
+            return best;
+        }
+        else{
+            int best = 1000;
+            for(int row = 0; row < 4; row++){
+                for(int column = 0; column < 4; column++) {
+                    if (gameBoard.board[row][column].equals("")){
+                        gameBoard.board[row][column] = "X";
+                        //gameBoard.printGameBoard();
+                        best = Math.min(best, minimaxAlphaBeta(gameBoard, depth + 1, !turn, alpha, beta));
+                        gameBoard.board[row][column] = "";
+                        beta = Math.min(beta, best);
+                        if(beta <= alpha){
+                            break;
+                        }
+                    }
+                }
+            }
+            return best;
+        }
+    }
+
+
+
+
+
     public Move playBestMove(GameBoard gameBoard){
         int bestValue = -1000;
         Move bestMove = new Move();
@@ -93,10 +147,11 @@ class AI_Player extends Player {
 
         for (int row = 0; row < 4; row++){
             for (int column = 0; column <  4; column++){
-                Log.d("playBestMove", Integer.toString(row) + Integer.toString(column));
+                //Log.d("playBestMove", Integer.toString(row) + Integer.toString(column));
                 if(gameBoard.board[row][column].equals("")){
                     gameBoard.board[row][column] = "O";
-                    int moveValue = minimaxAlgorithm(gameBoard, 0, false);
+                    int moveValue = minimaxAlphaBeta(gameBoard, 0, false, -1000, 1000);
+                    //int moveValue = minimaxAlgorithm(gameBoard, 0, false);
                     gameBoard.board[row][column] = "";
                     if (moveValue > bestValue){
                         bestMove.setRow(row);

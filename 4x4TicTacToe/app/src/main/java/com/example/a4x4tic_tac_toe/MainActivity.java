@@ -60,15 +60,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gameBoard.setBoard(getMoveFromButtonClick(v, "X"));                               //use row/column indices to place mark on internal game_board
             //gameBoard.printGameBoard();
             setBoard(getMoveFromButtonClick(v, "X"));
-            gameBoard.printGameBoard();
+            //gameBoard.printGameBoard();
             int status = gameBoard.terminalStateStatus();
-            Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
+            //Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
             if(status != 0){
                 gameOverProtocol(status);
             }
             else {
                 Move AIMove = new Move();
-                if(gameBoard.turnCount > 4) {
+                if(gameBoard.turnCount > 0) {
                     AIMove = AI.playBestMove(gameBoard);
                     gameBoard.setBoard(AIMove);
                     setBoard(AIMove);
@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //gameBoard.setBoard(AIMove);
                     setBoard(AIMove);
                 }
-                Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
-                Log.d("status", "below this is the current board");
-                gameBoard.printGameBoard();
+                //Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
+                //Log.d("status", "below this is the current board");
+                //gameBoard.printGameBoard();
                 status = gameBoard.terminalStateStatus();
                 if(status != 0){
                     gameOverProtocol(status);
