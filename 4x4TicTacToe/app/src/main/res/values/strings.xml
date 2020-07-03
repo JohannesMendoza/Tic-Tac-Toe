@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">4x4 Tic-Tac-Toe</string>
+    <string name="one_player">One Player</string>
+    <string name="two_players">Two Players</string>
+    <string name="settings">Settings</string>
+    <string name="title">TIC-TAC-TOE</string>
 </resources>

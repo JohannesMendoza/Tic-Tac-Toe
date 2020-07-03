@@ -30,7 +30,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {                                            //method to set up a player, AI player, the internal game board, and the
         //GUI for the game board
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tic_tac_toe4x4);
         gameOver = false;
 
         textViewPlayer = findViewById(R.id.text_view_player);
@@ -64,7 +64,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
             }
             else {
                 Move AIMove = new Move();
-                if(gameBoard.turnCount > 0) {
+                if(gameBoard.turnCount > 2) {
                     AIMove = AI.playBestMove(gameBoard);
                     gameBoard.setBoard(AIMove);
                     setBoard(AIMove);
