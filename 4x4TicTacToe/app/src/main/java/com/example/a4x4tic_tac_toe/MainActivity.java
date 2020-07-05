@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchOnePlayerGame(View v){
-        Intent intent = new Intent(this, TicTacToe4x4Activity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 

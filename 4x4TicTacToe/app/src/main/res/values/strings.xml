@@ -6,10 +6,15 @@
     <string name="records">Records</string>
     <string name="title">TIC-TAC-TOE</string>
     <string name="boardtitle">Board</string>
-    <string name="board3x3">3x3 board</string>
-    <string name="board4x4">4x4 board</string>
+    <string name="board3x3">3x3</string>
+    <string name="board4x4">4x4</string>
+    <string name="difficultytitle">Difficulty</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
     <string name="firstmovetitle">First Move</string>
     <string name="firstmoveX">X</string>
     <string name="firstmoveO">O</string>
+    <string name="start">Start</string>
 
 </resources>

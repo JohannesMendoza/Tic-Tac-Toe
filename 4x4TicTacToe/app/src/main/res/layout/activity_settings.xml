@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context=".SettingsActivity">
 
     <TextView
@@ -19,7 +20,7 @@
         android:backgroundTint="@android:color/transparent"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/settings"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="70dp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,56 +45,135 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/boardtitle"
-            android:layout_centerHorizontal="true"/>
+            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/boardbuttongroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/boardtitle"
+            android:layout_marginTop="10dp">
 
-        <RadioGroup
-            android:id="@+id/boardradiogroup"
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/board3x3"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"
+                android:id="@+id/board3x3button"
+                android:layout_gravity="center_vertical" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/board4x4"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/holo_orange_light"
+                android:id="@+id/board4x4button"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/difficultytitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/boardtitle"
-            android:layout_centerHorizontal="true">
+            android:text="@string/difficultytitle"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/boardbuttongroup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
 
-            <RadioButton
-                android:id="@+id/board3x3radio"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/difficultybuttongroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/difficultytitle"
+            android:layout_marginTop="10dp">
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/board3x3"/>
-            <RadioButton
-                android:id="@+id/board4x4radio"
+                android:text="@string/easy"
+                android:id="@+id/easybutton"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="center_vertical" />
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/board4x4"/>
+                android:text="@string/medium"
+                android:id="@+id/mediumbutton"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="center_vertical" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hard"
+                android:id="@+id/hardbutton"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="center_vertical" />
 
-        </RadioGroup>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/firstmovetitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/boardtitle"
-            android:layout_centerHorizontal="true"/>
+            android:text="@string/firstmovetitle"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/difficultybuttongroup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
 
-
-        <RadioGroup
-            android:id="@+id/boardradiogroup"
-            android:layout_width="wrap_content"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/firstmovebuttongroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/boardtitle"
-            android:layout_centerHorizontal="true">
+            android:gravity="center_horizontal"
+            android:layout_below="@id/firstmovetitle"
+            android:layout_marginTop="10dp">
 
-            <RadioButton
-                android:id="@+id/board3x3radio"
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/board3x3"/>
-            <RadioButton
-                android:id="@+id/board4x4radio"
+                android:text="@string/firstmoveX"
+                android:id="@+id/Xbutton"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="center_vertical" />
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/board4x4"/>
+                android:text="@string/firstmoveO"
+                android:id="@+id/Obutton"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="center_vertical" />
 
-        </RadioGroup>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/startbutton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/firstmovebuttongroup"
+            android:layout_centerHorizontal="true"
+            android:text="@string/start"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/red"
+            android:onClick="launchGame"
+            android:layout_marginTop="50dp"/>
+
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
