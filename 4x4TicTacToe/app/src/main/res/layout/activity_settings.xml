@@ -63,6 +63,7 @@
                 android:text="@string/board3x3"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/transparent"
+                android:onClick="changeBoard"
                 android:id="@+id/board3x3button"
                 android:layout_gravity="center_vertical" />
 
@@ -71,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/board4x4"
                 android:textColor="@android:color/white"
-                android:backgroundTint="@android:color/holo_orange_light"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="changeBoard"
                 android:id="@+id/board4x4button"
                 android:layout_gravity="center_vertical" />
 
@@ -100,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/easy"
                 android:id="@+id/easybutton"
+                android:onClick="changeDifficulty"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/transparent"
                 android:layout_gravity="center_vertical" />
@@ -109,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/medium"
                 android:id="@+id/mediumbutton"
+                android:onClick="changeDifficulty"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/transparent"
                 android:layout_gravity="center_vertical" />
@@ -117,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hard"
                 android:id="@+id/hardbutton"
+                android:onClick="changeDifficulty"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/transparent"
                 android:layout_gravity="center_vertical" />
@@ -146,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/firstmoveX"
                 android:id="@+id/Xbutton"
+                android:onClick="changeFirstMove"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/transparent"
                 android:layout_gravity="center_vertical" />
@@ -155,6 +161,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/firstmoveO"
                 android:id="@+id/Obutton"
+                android:onClick="changeFirstMove"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_gravity="center_vertical" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/firstmoveXO"
+                android:id="@+id/XObutton"
+                android:onClick="changeFirstMove"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/transparent"
                 android:layout_gravity="center_vertical" />
