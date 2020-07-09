@@ -3,7 +3,9 @@ package com.example.a4x4tic_tac_toe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
     private int playerPoints;
     private int AIPoints;
     private boolean gameOver;
+    int difficulty;
 
     private TextView textViewPlayer;
     private TextView textViewAI;
@@ -32,6 +35,9 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe4x4);
         gameOver = false;
+        Intent intent = getIntent();
+        difficulty = intent.getIntExtra("difficulty", 0);
+        Log.d("diff", Integer.toString(difficulty));
 
         textViewPlayer = findViewById(R.id.text_view_player);
         textViewAI = findViewById(R.id.text_view_AI);
