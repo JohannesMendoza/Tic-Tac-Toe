@@ -14,8 +14,9 @@ public class SettingsActivity extends AppCompatActivity {
     Button boardButtons[] = new Button[2];
     Button difficultyButtons[] = new Button[3];
     Button firstMoveButtons[] = new Button[3];
-    int difficultyChosen = 0;
     int gameBoardChosen = 0;
+    String difficultyChosen = "easy";
+    String firstMoveChosen = "X";
 
 
     @Override
@@ -30,7 +31,6 @@ public class SettingsActivity extends AppCompatActivity {
         firstMoveButtons[0] = findViewById(R.id.Xbutton);
         firstMoveButtons[1] = findViewById(R.id.Obutton);
         firstMoveButtons[2] = findViewById(R.id.XObutton);
-
     }
 
     public void changeBoard(View v) {
@@ -49,40 +49,42 @@ public class SettingsActivity extends AppCompatActivity {
     public void changeDifficulty(View v){
         switch (v.getId()) {
             case (R.id.easybutton):     //Easy Difficulty is Chosen
-                difficultyChosen = -1;
+                difficultyChosen = "easy";
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(difficultyButtons[1], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 ViewCompat.setBackgroundTintList(difficultyButtons[2], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 break;
             case (R.id.mediumbutton):   //Medium Difficulty is Chosen
-                difficultyChosen = 0;
+                difficultyChosen = "medium";
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(difficultyButtons[0], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 ViewCompat.setBackgroundTintList(difficultyButtons[2], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 break;
             case (R.id.hardbutton):     //Hard difficulty us Chosen
-                difficultyChosen = 1;
+                difficultyChosen = "hard";
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(difficultyButtons[0], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 ViewCompat.setBackgroundTintList(difficultyButtons[1], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 break;
         }
-
     }
 
     public void changeFirstMove(View v){
         switch (v.getId()) {
             case (R.id.Xbutton):
+                firstMoveChosen = "X";
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(firstMoveButtons[1], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 ViewCompat.setBackgroundTintList(firstMoveButtons[2], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 break;
             case (R.id.Obutton):
+                firstMoveChosen = "O";
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(firstMoveButtons[0], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 ViewCompat.setBackgroundTintList(firstMoveButtons[2], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 break;
             case (R.id.XObutton):
+                firstMoveChosen = "random";
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(firstMoveButtons[0], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 ViewCompat.setBackgroundTintList(firstMoveButtons[1], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
@@ -93,8 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void launchGame(View v){
         Intent intent = new Intent(this, TicTacToe4x4Activity.class);
         intent.putExtra("difficulty", difficultyChosen);
+        intent.putExtra("firstMove", firstMoveChosen);
         startActivity(intent);
     }
-
-
 }

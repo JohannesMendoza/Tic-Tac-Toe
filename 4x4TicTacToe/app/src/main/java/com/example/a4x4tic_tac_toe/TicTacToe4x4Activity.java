@@ -23,7 +23,9 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
     private int playerPoints;
     private int AIPoints;
     private boolean gameOver;
-    int difficulty;
+    String difficulty = "easy";
+    String firstMove = "lol";
+
 
     private TextView textViewPlayer;
     private TextView textViewAI;
@@ -36,8 +38,10 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_tic_tac_toe4x4);
         gameOver = false;
         Intent intent = getIntent();
-        difficulty = intent.getIntExtra("difficulty", 0);
-        Log.d("diff", Integer.toString(difficulty));
+        difficulty = intent.getStringExtra("difficulty");
+        firstMove = intent.getStringExtra("firstMove");
+
+        Log.d("diff", difficulty + " " + firstMove);
 
         textViewPlayer = findViewById(R.id.text_view_player);
         textViewAI = findViewById(R.id.text_view_AI);
@@ -49,8 +53,14 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
                 buttons[x][y].setOnClickListener(this);
             }
         }
-
         Button resetButton = findViewById(R.id.button_reset);
+
+        if (firstMove.equals("O")){
+            Move AIMove = new Move();
+            AIMove = AI.playRandomMove(gameBoard);
+            gameBoard.setBoard(AIMove);
+            setBoard(AIMove);
+        }
     }
     @Override
     public void onClick(View v){                                                                    //function for action when a button on the grid is clicked
