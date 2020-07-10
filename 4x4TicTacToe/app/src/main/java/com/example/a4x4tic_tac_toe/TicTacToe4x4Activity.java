@@ -59,23 +59,21 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
             if (!((Button) v).getText().toString().equals("")) {                                        //if button that was clicked contains an empty string
                 return;
             }
-            gameBoard.setBoard(getMoveFromButtonClick(v, "X"));                               //use row/column indices to place mark on internal game_board
-            //gameBoard.printGameBoard();
-            setBoard(getMoveFromButtonClick(v, "X"));
-            //gameBoard.printGameBoard();
-            int status = gameBoard.terminalStateStatus();
+            gameBoard.setBoard(getMoveFromButtonClick(v, "X"));                             //use row/column indices to place mark on internal game_board
+            setBoard(getMoveFromButtonClick(v, "X"));                                       //Place mark on graphical game board for user to see
+            int status = gameBoard.terminalStateStatus();                                           //check game board to see if the game should be ended
             //Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
-            if(status != 0){
+            if(status != 0){                                                                        //If the game is over, proceed with the game over process
                 gameOverProtocol(status);
             }
-            else {
+            else {                                                                                  //if the game is not over, Allow the AI to make a move
                 Move AIMove = new Move();
                 if(gameBoard.turnCount > 2) {
                     AIMove = AI.playBestMove(gameBoard);
                     gameBoard.setBoard(AIMove);
                     setBoard(AIMove);
                 }
-                else {
+                else {                                                                              //Allow the AI to make a random move for the first 2 moves to speed up time (Will be moved)
                     AIMove = AI.playRandomMove(gameBoard);
                     //gameBoard.setBoard(AIMove);
                     setBoard(AIMove);
@@ -83,7 +81,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
                 //Log.d("turnstatus", Integer.toString(gameBoard.turnCount));
                 //Log.d("status", "below this is the current board");
                 //gameBoard.printGameBoard();
-                status = gameBoard.terminalStateStatus();
+                status = gameBoard.terminalStateStatus();                                           //Check if the game is over, and proceed with game over process if it is
                 if(status != 0){
                     gameOverProtocol(status);
                 }
@@ -117,7 +115,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
         return move;
 
     }
-    public void setBoard(Move move){
+    public void setBoard(Move move){                                                                //function that places marks with the appropriate color on the GUI
         if (move.getValue().equals("X")) {
             buttons[move.getRow()][move.getColumn()].setTextColor(getResources().getColor(R.color.blue));
         }
@@ -127,7 +125,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
         buttons[move.getRow()][move.getColumn()].setText(move.getValue());
     }
 
-    public void displayResult(int result){
+    public void displayResult(int result){                                                          //Function to display a message of the results of the game
         Context context = getApplicationContext();
         Toast toast;
         int duration = Toast.LENGTH_LONG;
@@ -147,7 +145,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
-    public void gameOverProtocol(int status){
+    public void gameOverProtocol(int status){                                                       //function to be called when the game is over
         gameOver = true;
         displayResult(status);
     }

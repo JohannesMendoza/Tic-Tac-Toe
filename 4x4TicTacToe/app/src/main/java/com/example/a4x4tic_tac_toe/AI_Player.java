@@ -11,6 +11,7 @@ class AI_Player extends Player {
         wins = 0;
         winStreak = 0;
     }
+
     public Move playRandomMove(GameBoard game_board){                 //method for the AI agent to make a random move on a game board
         Move move = new Move();
         move.setValue("O");
@@ -19,7 +20,7 @@ class AI_Player extends Player {
         move.column = rand.nextInt(4);
         boolean move_made = false;
         while (!move_made) {
-            if (game_board.board[move.row][move.column].equals("")) {
+            if (game_board.board[move.row][move.column].equals("")) {           //Choose a random index on the board that does not have a mark yet
                 game_board.setBoard(move);
                 move_made = true;
             }
@@ -31,40 +32,25 @@ class AI_Player extends Player {
         return move;
     }
 
-
-    public int minimaxAlgorithm(GameBoard gameBoard, int depth, Boolean turn){
+    public int minimaxAlgorithm(GameBoard gameBoard, int depth, Boolean turn){                      //Minimax algorithm
         int score = gameBoard.terminalStateStatus();
-        //Log.d("depth", Integer.toString(depth));
-        //Log.d("minimax", "here");
-        if (score == 17){
-            //Log.d("minimax", "Ai wins at");
-            //gameBoard.printGameBoard();
+        if (score == 17){                                                                           //If
             return score - depth;
         }
         if (score == -17){
-            //Log.d("minimax", "player wins");
             return score + depth;
         }
         if (gameBoard.isBoardFull()){
-            //Log.d("minimax", "draw");
             return 0;
         }
-        //Log.d("minimax", "here2");
         if (turn){
             int best = -1000;
             for(int row = 0; row < 4; row++){
                 for(int column = 0; column < 4; column++) {
-                    //Log.d("minimax loop", Integer.toString(row) + Integer.toString(column));
-                    //Log.d("minimax", "here3");
                     if (gameBoard.board[row][column].equals("")){
                         gameBoard.board[row][column] = "O";
-                        //Log.d("minimax", "here4");
-                        //gameBoard.printGameBoard();
                         best = Math.max(best, minimaxAlgorithm(gameBoard, depth + 1, !turn));
                         gameBoard.board[row][column] = "";
-                    }
-                    else{
-                        //Log.d("this was already chosen", Integer.toString(row) + Integer.toString(column));
                     }
                 }
             }
@@ -76,7 +62,6 @@ class AI_Player extends Player {
                 for(int column = 0; column < 4; column++) {
                     if (gameBoard.board[row][column].equals("")){
                         gameBoard.board[row][column] = "X";
-                        //gameBoard.printGameBoard();
                         best = Math.min(best, minimaxAlgorithm(gameBoard, depth + 1, !turn));
                         gameBoard.board[row][column] = "";
                     }
@@ -89,7 +74,6 @@ class AI_Player extends Player {
     public int minimaxAlphaBeta(GameBoard gameBoard, int depth, boolean turn, int alpha, int beta){
         int score = gameBoard.terminalStateStatus();
         if (score == 17){
-            //Log.d("playBestMove", Integer.toString(score) + Integer.toString(depth));
             return score - depth;
         }
         if (score == -17){
@@ -135,23 +119,16 @@ class AI_Player extends Player {
         }
     }
 
-
-
-
-
-    public Move playBestMove(GameBoard gameBoard){
+    public Move playBestMove(GameBoard gameBoard){                                                  //helper function
         int bestValue = -1000;
         Move bestMove = new Move();
         bestMove.setRow(-1);
         bestMove.setColumn(-1);
-
         for (int row = 0; row < 4; row++){
             for (int column = 0; column <  4; column++){
-                //Log.d("playBestMove", Integer.toString(row) + Integer.toString(column));
                 if(gameBoard.board[row][column].equals("")){
                     gameBoard.board[row][column] = "O";
                     int moveValue = minimaxAlphaBeta(gameBoard, 0, false, -1000, 1000);
-                    //int moveValue = minimaxAlgorithm(gameBoard, 0, false);
                     gameBoard.board[row][column] = "";
                     if (moveValue > bestValue){
                         bestMove.setRow(row);
