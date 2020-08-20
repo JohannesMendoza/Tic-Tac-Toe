@@ -11,13 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnClickListener{
+public class TicTacToe3x3Activity extends AppCompatActivity implements View.OnClickListener{
 
     public static Context context;
     Player player = new Player();
     AI_Player AI = new AI_Player();
-    GameBoard gameBoard = new GameBoard(context, player, AI, 4);
-    private Button[][] buttons = new Button[4][4];
+    GameBoard gameBoard = new GameBoard(context, player, AI, 3);
+    private Button[][] buttons = new Button[3][3];
     private boolean playerTurn = true;
     private int turnCount;
     private int playerPoints;
@@ -35,7 +35,7 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {                                            //method to set up a player, AI player, the internal game board, and the
         //GUI for the game board
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tic_tac_toe4x4);
+        setContentView(R.layout.activity_tic_tac_toe3x3);
         gameOver = false;
         Intent intent = getIntent();
         difficulty = intent.getStringExtra("difficulty");
@@ -45,8 +45,8 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
 
         textViewPlayer = findViewById(R.id.text_view_player);
         textViewAI = findViewById(R.id.text_view_AI);
-        for (int x = 0; x < 4; x++){                                                                //for all spaces in the grid
-            for (int y = 0; y < 4; y++){
+        for (int x = 0; x < 3; x++){                                                                //for all spaces in the grid
+            for (int y = 0; y < 3; y++){
                 String buttonID = "button_" + x + y;
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName()); //fetches IDs of the views dynamically  within the loop
                 buttons[x][y] = findViewById(resID);
@@ -94,8 +94,8 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
         }
     }
     public void resetBoard(View v){                                                                //function that resets the whole board to an empty state and the number of turns to 0
-        for(int x = 0; x < 4; x++){
-            for (int y = 0; y < 4; y++){
+        for(int x = 0; x < 2; x++){
+            for (int y = 0; y < 2; y++){
                 buttons[x][y].setText("");
             }
         }

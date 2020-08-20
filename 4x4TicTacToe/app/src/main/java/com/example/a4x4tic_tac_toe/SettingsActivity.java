@@ -14,7 +14,7 @@ public class SettingsActivity extends AppCompatActivity {
     Button boardButtons[] = new Button[2];
     Button difficultyButtons[] = new Button[3];
     Button firstMoveButtons[] = new Button[3];
-    int gameBoardChosen = 0;
+    int gameBoardChosen = 3;
     String difficultyChosen = "easy";
     String firstMoveChosen = "X";
 
@@ -36,10 +36,12 @@ public class SettingsActivity extends AppCompatActivity {
     public void changeBoard(View v) {
         switch (v.getId()) {
             case (R.id.board3x3button):
+                gameBoardChosen = 3;
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(boardButtons[1], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 break;
             case (R.id.board4x4button):
+                gameBoardChosen = 4;
                 ViewCompat.setBackgroundTintList(v, ContextCompat.getColorStateList(getApplicationContext(), android.R.color.holo_orange_light));
                 ViewCompat.setBackgroundTintList(boardButtons[0], ContextCompat.getColorStateList(getApplicationContext(), android.R.color.transparent));
                 break;
@@ -93,9 +95,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void launchGame(View v){
-        Intent intent = new Intent(this, TicTacToe4x4Activity.class);
-        intent.putExtra("difficulty", difficultyChosen);
-        intent.putExtra("firstMove", firstMoveChosen);
-        startActivity(intent);
+        if(gameBoardChosen == 3){
+            Intent intent = new Intent(this, TicTacToe3x3Activity.class);
+            intent.putExtra("difficulty", difficultyChosen);
+            intent.putExtra("firstMove", firstMoveChosen);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, TicTacToe4x4Activity.class);
+            intent.putExtra("difficulty", difficultyChosen);
+            intent.putExtra("firstMove", firstMoveChosen);
+            startActivity(intent);
+        }
     }
 }

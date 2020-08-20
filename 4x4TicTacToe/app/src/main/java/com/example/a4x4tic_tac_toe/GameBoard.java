@@ -18,12 +18,14 @@ public class GameBoard {
     //Move moveLog[];                    //log of all the moves played within the game
     Player players[] = new Player[2];                   //list of players in the game
     boolean player1sTurn;
+    int boardSize;
 
 
 
-    GameBoard (Context context, Player player1, Player player2){
+    GameBoard (Context context, Player player1, Player player2, int size){
         this.context = context;
-        board = new String[4][4];
+        board = new String[size][size];
+        boardSize = size;
         resetBoard();
         players[0] = player1;
         players[1] = player2;
@@ -31,7 +33,7 @@ public class GameBoard {
     }
 
     public boolean isBoardFull(){     //function to determine whether  a game board is full or not
-        if (turnCount == 16){
+        if (turnCount == boardSize*boardSize){
             return true;
         }
         else
@@ -42,8 +44,8 @@ public class GameBoard {
     }
 
     public void resetBoard(){          //function to reset the game board
-        for(int row = 0; row < 4; row++){
-            for (int col = 0; col < 4; col++){
+        for(int row = 0; row < boardSize; row++){
+            for (int col = 0; col < boardSize; col++){
                 board[row][col] = "";
             }
         }

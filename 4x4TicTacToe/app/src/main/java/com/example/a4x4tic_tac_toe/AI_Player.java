@@ -45,8 +45,8 @@ class AI_Player extends Player {
         }
         if (turn){
             int best = -1000;
-            for(int row = 0; row < 4; row++){
-                for(int column = 0; column < 4; column++) {
+            for(int row = 0; row < gameBoard.boardSize; row++){
+                for(int column = 0; column < gameBoard.boardSize; column++) {
                     if (gameBoard.board[row][column].equals("")){
                         gameBoard.board[row][column] = "O";
                         best = Math.max(best, minimaxAlgorithm(gameBoard, depth + 1, !turn));
@@ -58,8 +58,8 @@ class AI_Player extends Player {
         }
         else{
             int best = 1000;
-            for(int row = 0; row < 4; row++){
-                for(int column = 0; column < 4; column++) {
+            for(int row = 0; row < gameBoard.boardSize; row++){
+                for(int column = 0; column < gameBoard.boardSize; column++) {
                     if (gameBoard.board[row][column].equals("")){
                         gameBoard.board[row][column] = "X";
                         best = Math.min(best, minimaxAlgorithm(gameBoard, depth + 1, !turn));
@@ -101,8 +101,8 @@ class AI_Player extends Player {
         }
         else{
             int best = 1000;
-            for(int row = 0; row < 4; row++){
-                for(int column = 0; column < 4; column++) {
+            for(int row = 0; row < gameBoard.boardSize; row++){
+                for(int column = 0; column < gameBoard.boardSize; column++) {
                     if (gameBoard.board[row][column].equals("")){
                         gameBoard.board[row][column] = "X";
                         //gameBoard.printGameBoard();
@@ -124,8 +124,8 @@ class AI_Player extends Player {
         Move bestMove = new Move();
         bestMove.setRow(-1);
         bestMove.setColumn(-1);
-        for (int row = 0; row < 4; row++){
-            for (int column = 0; column <  4; column++){
+        for (int row = 0; row < gameBoard.boardSize; row++){
+            for (int column = 0; column <  gameBoard.boardSize; column++){
                 if(gameBoard.board[row][column].equals("")){
                     gameBoard.board[row][column] = "O";
                     int moveValue = minimaxAlphaBeta(gameBoard, 0, false, -1000, 1000);
