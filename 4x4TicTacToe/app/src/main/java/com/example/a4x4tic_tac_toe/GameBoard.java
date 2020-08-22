@@ -53,67 +53,108 @@ public class GameBoard {
     }
 
     public int terminalStateStatus(){        //function to check whether the board is full, or a player has accumulated 3 in a row
-        //diagonal check
-        //down right
-        for (int x = 0; x < 2; x++){
-            for (int y = 0; y < 2; y++){
+        if (boardSize == 3) {
+            //down left
+            int x = 0;
+            int y = 0;
+            if ((!board[x][y].equals(""))
+                    && (board[x][y].equals(board[x + 1][y + 1]))
+                    && (board[x][y].equals(board[x + 2][y + 2]))) {
+                if (board[x][y].equals("X"))
+                    return -10;
+                else {
+                    return 10;
+                }
+            }
+            //down right
+            x = 0;
+            y = 2;
+            if ((!board[x][y].equals(""))
+                    && (board[x][y].equals(board[x + 1][y - 1]))
+                    && (board[x][y].equals(board[x + 2][y - 2]))) {
+                if (board[x][y].equals("X"))
+                    return -10;
+                else {
+                    return 10;
+                }
+            }
+            //horizontal checks
+            for (x = 0, y = 0; x < 2; x++) {
                 if ((!board[x][y].equals(""))
-                        && (board[x][y].equals(board[x+1][y+1]))
-                        && (board[x][y].equals(board[x+2][y+2]))){
+                        && (board[x][y].equals(board[x][y + 1]))
+                        && (board[x][y].equals(board[x][y + 2]))) {
                     if (board[x][y].equals("X"))
-                        return -17;
-                    else{
-                        //Log.d("tstate1", "Ai wins down right at");
-                        //Log.d("tstate1", Integer.toString(x) + Integer.toString(y));
-                        return 17;
-                    }
+                        return -10;
+                    else
+                        return 10;
+                }
+            }
+            //vertical checks
+            for (x = 0, y = 0; y < 2; y++) {
+                if ((!board[x][y].equals(""))
+                        && (board[x][y].equals(board[x + 1][y]))
+                        && (board[x][y].equals(board[x + 2][y]))) {
+                    if (board[x][y].equals("X"))
+                        return -10;
+                    else
+                        return 10;
                 }
             }
         }
-        //down left
-        for (int x = 0; x < 2; x++){
-            for (int y = 3; y > 1; y--){
-                if ((!board[x][y].equals(""))
-                        && (board[x][y].equals(board[x+1][y-1]))
-                        && (board[x][y].equals(board[x+2][y-2]))){
-                    if (board[x][y].equals("X"))
-                        return -17;
-                    else{
-                        //Log.d("tstate2", "Ai wins down left at");
-                        //Log.d("tstate2", Integer.toString(x) + Integer.toString(y));
-                        return 17;
+        else if (boardSize == 4){
+            //diagonal check
+            //down right
+            for (int x = 0; x < 2; x++) {
+                for (int y = 0; y < 2; y++) {
+                    if ((!board[x][y].equals(""))
+                            && (board[x][y].equals(board[x + 1][y + 1]))
+                            && (board[x][y].equals(board[x + 2][y + 2]))) {
+                        if (board[x][y].equals("X"))
+                            return -17;
+                        else
+                            return 17;
                     }
                 }
             }
-        }
-        //horizontal
-        for (int x = 0; x < 4; x++){
-            for(int y = 0; y < 2; y++){
-                if ((!board[x][y].equals(""))
-                        && (board[x][y].equals(board[x][y+1]))
-                        && (board[x][y].equals(board[x][y+2]))){
-                    if (board[x][y].equals("X"))
-                        return -17;
-                    else {
-                        //Log.d("tstate3", "Ai wins horizontally at");
-                        //Log.d("tstate3", Integer.toString(x) + Integer.toString(y));
-                        return 17;
+            //down left
+            for (int x = 0; x < 2; x++) {
+                for (int y = 3; y > 1; y--) {
+                    if ((!board[x][y].equals(""))
+                            && (board[x][y].equals(board[x + 1][y - 1]))
+                            && (board[x][y].equals(board[x + 2][y - 2]))) {
+                        if (board[x][y].equals("X"))
+                            return -17;
+                        else
+                            return 17;
                     }
                 }
             }
-        }
-        //vertical
-        for (int x = 0; x < 2; x++){
-            for(int y = 0; y < 4; y++){
-                if ((!board[x][y].equals(""))
-                        && (board[x][y].equals(board[x+1][y]))
-                        && (board[x][y].equals(board[x+2][y]))){
-                    if (board[x][y].equals("X"))
-                        return -17;
-                    else{
-                        //Log.d("tstate4", "Ai wins vertically at");
-                        //Log.d("tstate4", Integer.toString(x) + Integer.toString(y));
-                        return 17;
+            //horizontal
+            for (int x = 0; x < 4; x++) {
+                for (int y = 0; y < 2; y++) {
+                    if ((!board[x][y].equals(""))
+                            && (board[x][y].equals(board[x][y + 1]))
+                            && (board[x][y].equals(board[x][y + 2]))) {
+                        if (board[x][y].equals("X"))
+                            return -17;
+                        else
+                            return 17;
+                    }
+                }
+            }
+            //vertical
+            for (int x = 0; x < 2; x++) {
+                for (int y = 0; y < 4; y++) {
+                    if ((!board[x][y].equals(""))
+                            && (board[x][y].equals(board[x + 1][y]))
+                            && (board[x][y].equals(board[x + 2][y]))) {
+                        if (board[x][y].equals("X"))
+                            return -17;
+                        else {
+                            //Log.d("tstate4", "Ai wins vertically at");
+                            //Log.d("tstate4", Integer.toString(x) + Integer.toString(y));
+                            return 17;
+                        }
                     }
                 }
             }

@@ -57,14 +57,13 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
 
         if (firstMove.equals("O")){
             Move AIMove = new Move();
-            AIMove = AI.playRandomMove(gameBoard);
+            AIMove = AI.playMove(gameBoard);
             gameBoard.setBoard(AIMove);
             setBoard(AIMove);
         }
     }
     @Override
     public void onClick(View v){                                                                    //function for action when a button on the grid is clicked
-
         if(gameOver == false) {
             if (!((Button) v).getText().toString().equals("")) {                                        //if button that was clicked contains an empty string
                 return;
@@ -77,10 +76,13 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
             }
             else {                                                                                  //if the game is not over, Allow the AI to make a move
                 Move AIMove = new Move();
-                if(gameBoard.turnCount > 2) {
-                    AIMove = AI.playBestMove(gameBoard);
-                    gameBoard.setBoard(AIMove);
-                    setBoard(AIMove);
+                if(gameBoard.turnCount > -1) {
+                    moveThread thread = new moveThread(AI, gameBoard);
+                    //AIMove = AI.playMove(gameBoard);
+                    thread.start();
+                    //AIMove = thread.m;
+                    //gameBoard.setBoard(AIMove);
+                    //setBoard(AIMove);
                 }
                 else {                                                                              //Allow the AI to make a random move for the first 2 moves to speed up time (Will be moved)
                     AIMove = AI.playRandomMove(gameBoard);
@@ -94,8 +96,8 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
         }
     }
     public void resetBoard(View v){                                                                //function that resets the whole board to an empty state and the number of turns to 0
-        for(int x = 0; x < 4; x++){
-            for (int y = 0; y < 4; y++){
+        for(int x = 0; x < gameBoard.boardSize; x++){
+            for (int y = 0; y < gameBoard.boardSize; y++){
                 buttons[x][y].setText("");
             }
         }
@@ -150,4 +152,24 @@ public class TicTacToe4x4Activity extends AppCompatActivity implements View.OnCl
         gameOver = true;
         displayResult(status);
     }
+    public void startThread (View view){
+
+    }
+    public void stopThread(View view){
+
+    }
+    class moveThread extends Thread {
+        AI_Player AI;
+        GameBoard gameBoard;
+        Move m;
+        moveThread(AI_Player a, GameBoard g){
+            AI = a;
+            gameBoard = g;
+        }
+        @Override
+        public void run(){
+            m = AI.playMove(gameBoard);
+        }
+    }
+
 }

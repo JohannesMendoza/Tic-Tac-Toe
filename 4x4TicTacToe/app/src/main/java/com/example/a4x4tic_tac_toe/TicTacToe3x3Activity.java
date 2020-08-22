@@ -57,7 +57,7 @@ public class TicTacToe3x3Activity extends AppCompatActivity implements View.OnCl
 
         if (firstMove.equals("O")){
             Move AIMove = new Move();
-            AIMove = AI.playRandomMove(gameBoard);
+            AIMove = AI.playBestMove(gameBoard);
             gameBoard.setBoard(AIMove);
             setBoard(AIMove);
         }
@@ -77,13 +77,13 @@ public class TicTacToe3x3Activity extends AppCompatActivity implements View.OnCl
             }
             else {                                                                                  //if the game is not over, Allow the AI to make a move
                 Move AIMove = new Move();
-                if(gameBoard.turnCount > 2) {
+                if(gameBoard.turnCount >= 0) {
                     AIMove = AI.playBestMove(gameBoard);
                     gameBoard.setBoard(AIMove);
                     setBoard(AIMove);
                 }
                 else {                                                                              //Allow the AI to make a random move for the first 2 moves to speed up time (Will be moved)
-                    AIMove = AI.playRandomMove(gameBoard);
+                    AIMove = AI.playBestMove(gameBoard);
                     setBoard(AIMove);
                 }
                 status = gameBoard.terminalStateStatus();                                           //Check if the game is over, and proceed with game over process if it is
@@ -94,8 +94,8 @@ public class TicTacToe3x3Activity extends AppCompatActivity implements View.OnCl
         }
     }
     public void resetBoard(View v){                                                                //function that resets the whole board to an empty state and the number of turns to 0
-        for(int x = 0; x < 2; x++){
-            for (int y = 0; y < 2; y++){
+        for(int x = 0; x < gameBoard.boardSize; x++){
+            for (int y = 0; y < gameBoard.boardSize; y++){
                 buttons[x][y].setText("");
             }
         }
@@ -136,11 +136,11 @@ public class TicTacToe3x3Activity extends AppCompatActivity implements View.OnCl
                 toast = Toast.makeText(context, "The game is a draw!", duration);
                 toast.show();
                 break;
-            case -17:
+            case -10:
                 toast = Toast.makeText(context, "You have won!", duration);
                 toast.show();
                 break;
-            case 17:
+            case 10:
                 toast = Toast.makeText(context, AI.getName() + " has won!", duration);
                 toast.show();
                 break;
